@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Msimelelo Victor Malusi · EPK | Neon Flair</title>
+    <!-- Google Fonts + Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0a14;
+            font-family: 'Inter', sans-serif;
+            color: #f0f0ff;
+            line-height: 1.5;
+            padding: 1.5rem;
+        }
+
+        .epk-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            background: #10101a;
+            border-radius: 2rem;
+            box-shadow: 0 25px 45px -12px rgba(0, 255, 255, 0.2);
+            overflow: hidden;
+            border: 1px solid #2c2c5a;
+        }
+
+        /* COVER PHOTO */
+        .cover-area {
+            position: relative;
+            height: 260px;
+            background: #1a1a2e;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .cover-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .cover-upload-icon {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(0,0,0,0.7);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0ff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 2;
+            transition: 0.2s;
+            border: 1px solid #0ff;
+            text-shadow: 0 0 4px #0ff;
+        }
+        .cover-upload-icon:hover {
+            background: #0ff;
+            color: #0a0a14;
+            box-shadow: 0 0 12px #0ff;
+        }
+
+        /* PROFILE PICTURE */
+        .profile-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            margin-top: -70px;
+            margin-bottom: 1rem;
+            z-index: 3;
+        }
+        .profile-frame {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: 4px solid #ff44cc;
+            background: #1a1a2e;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+            box-shadow: 0 0 0 4px #0a0a14, 0 0 0 8px rgba(255,68,204,0.3);
+        }
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .profile-upload-icon {
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            background: rgba(0,0,0,0.7);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ff44cc;
+            font-size: 0.8rem;
+            cursor: pointer;
+            border: 1px solid #ff44cc;
+        }
+        .profile-upload-icon:hover {
+            background: #ff44cc;
+            color: #0a0a14;
+            box-shadow: 0 0 10px #ff44cc;
+        }
+
+        /* header */
+        .name-title {
+            text-align: center;
+            margin-bottom: 0.8rem;
+        }
+        .name {
+            font-size: 2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #0ff, #ff44cc);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 8px rgba(0,255,255,0.3);
+        }
+        .title {
+            font-size: 0.8rem;
+            color: #ccddff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* navigation tabs - neon flair */
+        .nav-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.25rem;
+            padding: 0.5rem 1rem 0 1rem;
+            border-bottom: 1px solid #2c2c5a;
+            background: #10101a;
+        }
+        .nav-btn {
+            background: transparent;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            border-radius: 60px;
+            cursor: pointer;
+            color: #ccddf8;
+            transition: 0.2s;
+        }
+        .nav-btn i {
+            margin-right: 8px;
+        }
+        .nav-btn.active {
+            background: linear-gradient(135deg, #0ff, #ff44cc);
+            color: #0a0a14;
+            box-shadow: 0 0 15px rgba(0,255,255,0.6);
+        }
+        .nav-btn:hover:not(.active) {
+            background: #2c2c5a;
+            color: #ffffff;
+        }
+
+        /* pages */
+        .pages-container {
+            padding: 2rem 2rem 2.5rem;
+        }
+        .page {
+            display: none;
+            animation: fadeIn 0.25s ease;
+        }
+        .page.active-page {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            border-left: 4px solid #0ff;
+            padding-left: 1rem;
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+            text-shadow: 0 0 2px #0ff;
+        }
+
+        /* bio / about */
+        .bio-text {
+            background: #1a1a2e;
+            padding: 1.2rem;
+            border-radius: 1.2rem;
+            border: 1px solid #3a3a6e;
+            line-height: 1.6;
+        }
+
+        /* role cards */
+        .roles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        .role-card {
+            background: #1a1a2e;
+            border-radius: 1.2rem;
+            padding: 1.2rem;
+            text-align: center;
+            border: 1px solid #3a3a6e;
+            transition: 0.2s;
+        }
+        .role-card:hover {
+            border-color: #0ff;
+            box-shadow: 0 0 10px rgba(0,255,255,0.2);
+        }
+        .role-icon {
+            font-size: 2rem;
+            color: #0ff;
+            margin-bottom: 0.8rem;
+        }
+        .role-title {
+            font-weight: 800;
+            margin-bottom: 0.3rem;
+        }
+        .role-desc {
+            font-size: 0.75rem;
+            color: #ccddff;
+        }
+
+        /* work gallery (images) */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+        .work-card {
+            background: #1a1a2e;
+            border-radius: 1.2rem;
+            overflow: hidden;
+            border: 1px solid #3a3a6e;
+            transition: 0.2s;
+        }
+        .work-card:hover {
+            border-color: #ff44cc;
+        }
+        .work-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background: #2a2a4a;
+            display: block;
+        }
+        .work-info {
+            padding: 0.8rem;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        /* PDF list - now with links */
+        .pdf-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .pdf-item {
+            background: #1a1a2e;
+            border-radius: 1rem;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border: 1px solid #3a3a6e;
+            transition: 0.2s;
+        }
+        .pdf-item:hover {
+            border-color: #0ff;
+        }
+        .pdf-icon {
+            font-size: 2rem;
+            color: #ff44cc;
+        }
+        .pdf-details {
+            flex: 1;
+        }
+        .pdf-title {
+            font-weight: 700;
+        }
+        .pdf-meta {
+            font-size: 0.7rem;
+            color: #8899dd;
+        }
+        .pdf-download {
+            background: transparent;
+            border: 1px solid #0ff;
+            color: #0ff;
+            padding: 0.3rem 1rem;
+            border-radius: 60px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .pdf-download:hover {
+            background: #0ff;
+            color: #0a0a14;
+        }
+
+        /* contact grid */
+        .contact-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        .contact-card {
+            flex: 1;
+            background: #1a1a2e;
+            border-radius: 1.2rem;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid #3a3a6e;
+        }
+        .contact-icon {
+            font-size: 2rem;
+            color: #0ff;
+            margin-bottom: 0.8rem;
+        }
+        .btn-neon {
+            background: linear-gradient(135deg, #0ff, #ff44cc);
+            color: #0a0a14;
+            padding: 0.6rem 1.5rem;
+            border-radius: 60px;
+            text-decoration: none;
+            font-weight: 800;
+            display: inline-block;
+            margin-top: 1rem;
+            transition: 0.2s;
+            border: none;
+        }
+        .btn-neon:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 15px #0ff;
+        }
+
+        .photo-instruction {
+            background: #1a1a2e;
+            border-radius: 1rem;
+            padding: 0.8rem;
+            margin-top: 1rem;
+            font-size: 0.75rem;
+            text-align: center;
+            border: 1px dashed #0ff;
+        }
+        .footer-note {
+            background: #0a0a14;
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.7rem;
+            color: #8899dd;
+            border-top: 1px solid #2c2c5a;
+        }
+
+        @media (max-width: 700px) {
+            .pages-container { padding: 1.5rem; }
+            .name { font-size: 1.6rem; }
+            .nav-btn { padding: 0.4rem 1rem; font-size: 0.7rem; }
+            .cover-area { height: 160px; }
+            .profile-frame { width: 100px; height: 100px; margin-top: -50px; }
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="epk-container">
+    <!-- COVER PHOTO -->
+    <div class="cover-area" id="coverArea">
+        <img id="coverPhoto" class="cover-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 260'%3E%3Crect width='1200' height='260' fill='%231a1a2e'/%3E%3Ctext x='600' y='140' text-anchor='middle' fill='%230ff' font-size='18'%3EBRANDING + CODE + COMMUNITY (click camera)%3C/text%3E%3C/svg%3E" alt="cover">
+        <div class="cover-upload-icon" id="coverUploadBtn"><i class="fas fa-camera"></i></div>
+        <input type="file" id="coverFileInput" accept="image/jpeg,image/png,image/jpg">
+    </div>
+
+    <!-- PROFILE PICTURE -->
+    <div class="profile-wrapper">
+        <div class="profile-frame" id="profileArea">
+            <img id="profilePhoto" class="profile-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='100' fill='%232a2a4a'/%3E%3Ctext x='100' y='120' text-anchor='middle' fill='%23ff44cc' font-size='24'%3EMV%3C/text%3E%3C/svg%3E" alt="profile">
+            <div class="profile-upload-icon" id="profileUploadBtn"><i class="fas fa-camera"></i></div>
+            <input type="file" id="profileFileInput" accept="image/jpeg,image/png,image/jpg">
+        </div>
+    </div>
+
+    <div class="name-title">
+        <div class="name">Msimelelo Victor Malusi</div>
+        <div class="title">Administrator · Web Developer · Business Compliance & Branding · Founder @ Legacy Launchpad</div>
+    </div>
+
+    <!-- 5 TABS -->
+    <div class="nav-tabs">
+        <button class="nav-btn active" data-page="bio"><i class="fas fa-user"></i> Bio</button>
+        <button class="nav-btn" data-page="services"><i class="fas fa-cogs"></i> Services</button>
+        <button class="nav-btn" data-page="portfolio"><i class="fas fa-briefcase"></i> Portfolio</button>
+        <button class="nav-btn" data-page="pdfs"><i class="fas fa-file-pdf"></i> Documents</button>
+        <button class="nav-btn" data-page="contact"><i class="fas fa-envelope"></i> Contact</button>
+    </div>
+
+    <div class="pages-container">
+        <!-- PAGE 1: BIO & ROLES -->
+        <div id="bio-page" class="page active-page">
+            <div class="section-title">Multidisciplinary Leader</div>
+            <div class="bio-text">
+                <p><strong>Msimelelo Victor Malusi</strong> is a dynamic administrator, web developer, and business compliance & branding strategist. He is the Founder & CEO of <strong>Legacy Launchpad</strong> — a consultancy helping entrepreneurs build sustainable brands — and the Admin Manager at <strong>Liwelile Impumelelo Community Centre</strong>, driving operational excellence and community impact.</p>
+                <p style="margin-top: 12px;">With a hybrid background in tech and organisational management, Victor bridges the gap between digital solutions and business integrity. He has helped over 50+ small businesses formalise their compliance, build professional websites, and develop cohesive brand identities.</p>
+                <p style="margin-top: 12px;">Victor is passionate about empowering local enterprises and community organisations through accessible technology and sound business frameworks. He holds certifications in project management, web development, and corporate governance.</p>
+            </div>
+            <div class="roles-grid">
+                <div class="role-card"><div class="role-icon"><i class="fas fa-chalkboard-user"></i></div><div class="role-title">Admin Manager</div><div class="role-desc">Liwelile Impumelelo Community Centre · Operations, strategy, reporting</div></div>
+                <div class="role-card"><div class="role-icon"><i class="fas fa-code"></i></div><div class="role-title">Web Developer</div><div class="role-desc">Custom websites, e‑commerce, portfolio builds</div></div>
+                <div class="role-card"><div class="role-icon"><i class="fas fa-balance-scale"></i></div><div class="role-title">Compliance & Branding</div><div class="role-desc">Biz registration, tax compliance, brand strategy, CI</div></div>
+                <div class="role-card"><div class="role-icon"><i class="fas fa-rocket"></i></div><div class="role-title">Founder & CEO</div><div class="role-desc">Legacy Launchpad · Business growth hub</div></div>
+            </div>
+            <div class="photo-instruction">
+                <i class="fas fa-camera"></i> Click camera icons above to upload a custom cover photo and your professional portrait.
+            </div>
+        </div>
+
+        <!-- PAGE 2: SERVICES -->
+        <div id="services-page" class="page">
+            <div class="section-title">What I Offer</div>
+            <div class="roles-grid">
+                <div class="role-card"><div class="role-icon"><i class="fas fa-file-signature"></i></div><div class="role-title">Business Compliance</div><div class="role-desc">Company registration, tax clearance, BEE, licensing, policies</div></div>
+                <div class="role-card"><div class="role-icon"><i class="fas fa-paint-brush"></i></div><div class="role-title">Branding & Identity</div><div class="role-desc">Logo design, brand guidelines, CI, pitch decks</div></div>
+                <div class="role-card"><div class="role-icon"><i class="fas fa-laptop-code"></i></div><div class="role-title">Web Development</div><div class="role-desc">Responsive websites, CMS (WordPress/Webflow), SEO basics</div></div>
+                <div class="role-card"><div class="role-icon"><i class="fas fa-chart-line"></i></div><div class="role-title">Business Strategy</div><div class="role-desc">Growth plans, operational systems, grant applications</div></div>
+            </div>
+            <div class="photo-instruction"><i class="fas fa-image"></i> Replace placeholder images in Portfolio and Documents tabs with actual work samples.</div>
+        </div>
+
+        <!-- PAGE 3: PORTFOLIO (image placeholders) -->
+        <div id="portfolio-page" class="page">
+            <div class="section-title">Recent Work</div>
+            <div class="gallery-grid">
+                <div class="work-card"><img class="work-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 180'%3E%3Crect width='400' height='180' fill='%232a2a4a'/%3E%3Ctext x='200' y='95' text-anchor='middle' fill='%230ff'%3EWebsite mockup%3C/text%3E%3C/svg%3E" alt="web"><div class="work-info">Legacy Launchpad website (responsive)</div></div>
+                <div class="work-card"><img class="work-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 180'%3E%3Crect width='400' height='180' fill='%232a2a4a'/%3E%3Ctext x='200' y='95' text-anchor='middle' fill='%230ff'%3EBranding assets%3C/text%3E%3C/svg%3E" alt="branding"><div class="work-info">Client brand identity kit (logo, cards, stationery)</div></div>
+                <div class="work-card"><img class="work-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 180'%3E%3Crect width='400' height='180' fill='%232a2a4a'/%3E%3Ctext x='200' y='95' text-anchor='middle' fill='%230ff'%3ECommunity event%3C/text%3E%3C/svg%3E" alt="event"><div class="work-info">Liwelile Impumelelo – Annual Youth Day 2025</div></div>
+                <div class="work-card"><img class="work-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 180'%3E%3Crect width='400' height='180' fill='%232a2a4a'/%3E%3Ctext x='200' y='95' text-anchor='middle' fill='%230ff'%3ECompliance doc%3C/text%3E%3C/svg%3E" alt="compliance"><div class="work-info">Compliance toolkit (template for SMEs)</div></div>
+            </div>
+            <div class="photo-instruction"><i class="fas fa-upload"></i> Replace placeholder images with actual screenshots, photos of your work (websites, branding, community events).</div>
+        </div>
+
+        <!-- PAGE 4: DOCUMENTS (LINKS TO SEPARATE HTML PAGES) -->
+        <div id="pdfs-page" class="page">
+            <div class="section-title">Documents & Case Studies</div>
+            <div class="pdf-list">
+                <div class="pdf-item">
+                    <div class="pdf-icon"><i class="fas fa-file-pdf"></i></div>
+                    <div class="pdf-details">
+                        <div class="pdf-title">Legacy Launchpad – Service Brochure</div>
+                        <div class="pdf-meta">HTML page · overview of services</div>
+                    </div>
+                    <a href="legacy-brochure.html" class="pdf-download" style="text-decoration:none;">View →</a>
+                </div>
+                <div class="pdf-item">
+                    <div class="pdf-icon"><i class="fas fa-file-pdf"></i></div>
+                    <div class="pdf-details">
+                        <div class="pdf-title">Web Development Portfolio (Selected Projects)</div>
+                        <div class="pdf-meta">HTML page · case studies & tech stack</div>
+                    </div>
+                    <a href="portfolio-web.html" class="pdf-download" style="text-decoration:none;">View →</a>
+                </div>
+                <div class="pdf-item">
+                    <div class="pdf-icon"><i class="fas fa-file-pdf"></i></div>
+                    <div class="pdf-details">
+                        <div class="pdf-title">Business Compliance Checklist (for SMEs)</div>
+                        <div class="pdf-meta">HTML page · step‑by‑step guide</div>
+                    </div>
+                    <a href="compliance-checklist.html" class="pdf-download" style="text-decoration:none;">View →</a>
+                </div>
+                <div class="pdf-item">
+                    <div class="pdf-icon"><i class="fas fa-file-pdf"></i></div>
+                    <div class="pdf-details">
+                        <div class="pdf-title">Liwelile Impumelelo – Impact Report 2025</div>
+                        <div class="pdf-meta">HTML page · achievements & stats</div>
+                    </div>
+                    <a href="liwelile-report.html" class="pdf-download" style="text-decoration:none;">View →</a>
+                </div>
+            </div>
+            <div class="photo-instruction" style="margin-top: 1rem;">
+                <i class="fas fa-external-link-alt"></i> Each document opens as a separate, professionally styled HTML page.
+            </div>
+        </div>
+
+        <!-- PAGE 5: CONTACT -->
+        <div id="contact-page" class="page">
+            <div class="section-title">Let's Connect</div>
+            <div class="contact-grid">
+                <div class="contact-card"><div class="contact-icon"><i class="fas fa-envelope"></i></div><h3>Email</h3><p>victor@legacylaunchpad.co.za</p><p>admin@liwelile.org.za</p><a href="#" class="btn-neon">Send message</a></div>
+                <div class="contact-card"><div class="contact-icon"><i class="fas fa-phone-alt"></i></div><h3>Phone / WhatsApp</h3><p>+27 81 234 5678</p><div class="social-links" style="margin-top: 8px;"><a href="#" style="color:#0ff; margin:0 5px;"><i class="fab fa-linkedin"></i></a><a href="#" style="color:#ff44cc; margin:0 5px;"><i class="fab fa-github"></i></a></div><a href="#" class="btn-neon">Book a call</a></div>
+                <div class="contact-card"><div class="contact-icon"><i class="fas fa-building"></i></div><h3>Legacy Launchpad</h3><p>Johannesburg, South Africa</p><p>Consultations by appointment</p><a href="#" class="btn-neon">Get quote</a></div>
+            </div>
+            <div class="photo-instruction" style="margin-top: 1rem;">
+                <i class="fas fa-camera-retro"></i> All image placeholders (cover, profile, gallery) can be replaced by clicking the camera icons or editing the <code>src</code> attributes.
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        🚀 Msimelelo Victor Malusi · Admin · Web · Compliance · Branding · Neon EPK · Updated 2026
+    </div>
+</div>
+
+<script>
+    // COVER & PROFILE PHOTO PERSISTENCE (localStorage)
+    const coverFile = document.getElementById('coverFileInput');
+    const coverImg = document.getElementById('coverPhoto');
+    const coverBtn = document.getElementById('coverUploadBtn');
+
+    const profileFile = document.getElementById('profileFileInput');
+    const profileImg = document.getElementById('profilePhoto');
+    const profileBtn = document.getElementById('profileUploadBtn');
+
+    const COVER_KEY = 'victor_malusi_cover';
+    const PROFILE_KEY = 'victor_malusi_profile';
+
+    function loadSaved() {
+        const savedCover = localStorage.getItem(COVER_KEY);
+        if (savedCover && savedCover.startsWith('data:image')) coverImg.src = savedCover;
+        const savedProfile = localStorage.getItem(PROFILE_KEY);
+        if (savedProfile && savedProfile.startsWith('data:image')) profileImg.src = savedProfile;
+    }
+
+    function saveImage(fileInput, imgElement, storageKey) {
+        const file = fileInput.files[0];
+        if (file && (file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/jpg')) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const dataUrl = e.target.result;
+                localStorage.setItem(storageKey, dataUrl);
+                imgElement.src = dataUrl;
+                showToast("Photo updated ✓");
+            };
+            reader.readAsDataURL(file);
+        } else {
+            showToast("Please select JPG or PNG", 1500);
+        }
+    }
+
+    function showToast(msg, duration = 2000) {
+        let toast = document.querySelector('.neon-toast');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.className = 'neon-toast';
+            toast.style.position = 'fixed';
+            toast.style.bottom = '20px';
+            toast.style.left = '50%';
+            toast.style.transform = 'translateX(-50%)';
+            toast.style.backgroundColor = '#0ff';
+            toast.style.color = '#0a0a14';
+            toast.style.padding = '8px 24px';
+            toast.style.borderRadius = '60px';
+            toast.style.fontWeight = '800';
+            toast.style.fontSize = '0.8rem';
+            toast.style.zIndex = '2000';
+            toast.style.opacity = '0';
+            toast.style.transition = 'opacity 0.2s';
+            toast.style.pointerEvents = 'none';
+            document.body.appendChild(toast);
+        }
+        toast.textContent = msg;
+        toast.style.opacity = '1';
+        setTimeout(() => {
+            toast.style.opacity = '0';
+        }, duration);
+    }
+
+    coverBtn.addEventListener('click', () => coverFile.click());
+    coverFile.addEventListener('change', () => saveImage(coverFile, coverImg, COVER_KEY));
+    profileBtn.addEventListener('click', () => profileFile.click());
+    profileFile.addEventListener('change', () => saveImage(profileFile, profileImg, PROFILE_KEY));
+
+    loadSaved();
+
+    // TAB SWITCHING
+    const pages = {
+        bio: document.getElementById('bio-page'),
+        services: document.getElementById('services-page'),
+        portfolio: document.getElementById('portfolio-page'),
+        pdfs: document.getElementById('pdfs-page'),
+        contact: document.getElementById('contact-page')
+    };
+    const navBtns = document.querySelectorAll('.nav-btn');
+
+    function switchPage(pageId) {
+        Object.values(pages).forEach(page => page.classList.remove('active-page'));
+        if (pages[pageId]) pages[pageId].classList.add('active-page');
+        navBtns.forEach(btn => {
+            const btnPage = btn.getAttribute('data-page');
+            if (btnPage === pageId) btn.classList.add('active');
+            else btn.classList.remove('active');
+        });
+    }
+
+    navBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const pageId = btn.getAttribute('data-page');
+            if (pageId && pages[pageId]) switchPage(pageId);
+        });
+    });
+</script>
+</body>
+</html>
