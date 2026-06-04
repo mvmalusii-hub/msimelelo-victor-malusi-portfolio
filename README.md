@@ -1,7 +1,5 @@
 # msimelelo-victor-malusi-portfolio
 Neon EPK for Msimelelo Victor Malusi – Administrator, Web Developer, Business Compliance &amp; Branding Partner, Founder of Legacy Launchpad, Admin Manager at Liwelile Impumelelo. Includes main EPK + 4 supporting docs.
-# Msimelelo Victor Malusi · Neon EPK
-
 This repository contains my **Electronic Press Kit (EPK)** — a modern, neon‑styled website that showcases my work as an Administrator, Web Developer, Business Compliance & Branding Partner, Founder of Legacy Launchpad, and Admin Manager at Liwelile Impumelelo Community Centre.
 
 ## 🔗 Live Demo
